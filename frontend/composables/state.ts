@@ -1,0 +1,1 @@
+export const useUserObj = () => useState<{name:string|null}>("userObj", () => {return {name:null}});

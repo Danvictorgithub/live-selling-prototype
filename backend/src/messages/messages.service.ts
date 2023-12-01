@@ -12,11 +12,11 @@ export class MessagesService {
     if(!user) {
       user = await this.prisma.user.create({data:{name: createMessageDto.name}});
     }
-    return await this.prisma.message.create({data:{name:{connect:{id:user.id}}, message:createMessageDto.message}});
+    return await this.prisma.message.create({data:{user:{connect:{id:user.id}}, message:createMessageDto.message},include:{user:true}});
   }
 
   async findAll() {
-    return await this.prisma.message.findMany();
+    return await this.prisma.message.findMany({include:{user:true}});
   }
   async identify(name:string,clientId:string) {
     const user = await this.prisma.user.findFirst({where:{name}});
